@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Webhook Sender</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label, textarea, input, button {
+            display: block;
+            margin-bottom: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Discord Webhook Sender</h1>
+    <label for="webhookUrl">Webhook URL:</label>
+    <input type="text" id="webhookUrl" placeholder="Enter your webhook URL">
+    
+    <label for="message">Message:</label>
+    <textarea id="message" placeholder="Enter your message"></textarea>
+    
+    <button onclick="sendMessage()">Send</button>
+    
+    <script>
+        async function sendMessage() {
+            const webhookUrl = document.getElementById('webhookUrl').value;
+            const message = document.getElementById('message').value;
+            
+            if (!webhookUrl || !message) {
+                alert('Webhook URL and message cannot be empty');
+                return;
+            }
+            
+            const data = {
+                content: message
+            };
+            
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.status === 204) {
+                    alert('Message sent successfully');
+                } else {
+                    alert(`Failed to send message. Status code: ${response.status}`);
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+    </script>
+</body>
+</html>
