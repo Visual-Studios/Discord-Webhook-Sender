@@ -14,7 +14,7 @@ If you do not want to do this you can go to https://visual-studios.github.io/Dis
    git clone https://github.com/visual-studios/discord-webhook-sender.git
    cd discord-webhook-sender
 
-   2. Install the required Python library: 'pip install requests'\
+   2. Install the required Python library: 'pip install requests'
 
 
 # Starting 
