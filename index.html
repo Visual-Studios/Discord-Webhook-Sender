@@ -22,13 +22,27 @@
 </head>
 <body>
     <h1>Discord Webhook Sender</h1>
+    
     <label for="webhookUrl">Webhook URL:</label>
     <input type="text" id="webhookUrl" placeholder="Enter your webhook URL">
     
     <label for="message">Message:</label>
     <textarea id="message" placeholder="Enter your message"></textarea>
     
-    <button onclick="sendMessage()">Send</button>
+    <button onclick="sendMessage()">Send Message</button>
+    
+    <h2>Send Embed</h2>
+    
+    <label for="embedTitle">Embed Title:</label>
+    <input type="text" id="embedTitle" placeholder="Enter embed title">
+    
+    <label for="embedDescription">Embed Description:</label>
+    <textarea id="embedDescription" placeholder="Enter embed description"></textarea>
+    
+    <label for="embedColor">Embed Color (hex):</label>
+    <input type="text" id="embedColor" placeholder="Enter embed color (hex)">
+    
+    <button onclick="sendEmbed()">Send Embed</button>
     
     <script>
         async function sendMessage() {
@@ -57,6 +71,52 @@
                     alert('Message sent successfully');
                 } else {
                     alert(`Failed to send message. Status code: ${response.status}`);
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        async function sendEmbed() {
+            const webhookUrl = document.getElementById('webhookUrl').value;
+            const embedTitle = document.getElementById('embedTitle').value;
+            const embedDescription = document.getElementById('embedDescription').value;
+            const embedColor = document.getElementById('embedColor').value;
+            
+            if (!webhookUrl || !embedTitle || !embedDescription || !embedColor) {
+                alert('All embed fields must be filled');
+                return;
+            }
+            
+            let color;
+            try {
+                color = parseInt(embedColor.replace('#', ''), 16);
+            } catch (error) {
+                alert('Embed color must be a valid hex code');
+                return;
+            }
+            
+            const data = {
+                embeds: [{
+                    title: embedTitle,
+                    description: embedDescription,
+                    color: color
+                }]
+            };
+            
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.status === 204) {
+                    alert('Embed sent successfully');
+                } else {
+                    alert(`Failed to send embed. Status code: ${response.status}`);
                 }
             } catch (error) {
                 alert(`Error: ${error.message}`);
