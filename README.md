@@ -11,20 +11,30 @@ If you do not want to do this you can go to https://visual-studios.github.io/Dis
 ## Installation
 
 1. Clone the repository:
+   ```bash
    git clone https://github.com/visual-studios/discord-webhook-sender.git
+   ```
+   ```bash
    cd discord-webhook-sender
-
+   ```
+   ```bash
    cd python-gui
+   ```
    
 
-   2. Install the required Python library: 'pip install requests'
-
+   2. Install the required Python library:
+   ```bash 
+   pip install requests
+   ```
 
 # Starting 
 
 Navigate to the directory where the discord_webhook_gui.py file is located.
 
-2. Run the Python script: 'python discord_webhook_gui.py'
+2. Run the Python script:
+```bash
+ python discord_webhook_gui.py
+ ```
 
 3. The GUI window will open. Enter the Discord webhook URL and the message you want to send.
 
