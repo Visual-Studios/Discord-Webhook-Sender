@@ -26,6 +26,8 @@ def send_embed():
     embed_title = embed_title_entry.get()
     embed_description = embed_description_entry.get("1.0", tk.END).strip()
     embed_color = embed_color_entry.get()
+    embed_url = embed_url_entry.get()
+    embed_footer = embed_footer_entry.get()
     
     if not webhook_url or not embed_title or not embed_description or not embed_color:
         messagebox.showerror("Error", "All embed fields must be filled")
@@ -37,12 +39,20 @@ def send_embed():
         messagebox.showerror("Error", "Embed color must be a valid hex code")
         return
     
+    embed = {
+        "title": embed_title,
+        "description": embed_description,
+        "color": embed_color
+    }
+    
+    if embed_url:
+        embed["url"] = embed_url
+    
+    if embed_footer:
+        embed["footer"] = {"text": embed_footer}
+    
     data = {
-        "embeds": [{
-            "title": embed_title,
-            "description": embed_description,
-            "color": embed_color
-        }]
+        "embeds": [embed]
     }
     
     response = requests.post(webhook_url, json=data)
@@ -85,9 +95,19 @@ tk.Label(root, text="Embed Color (hex):").grid(row=5, column=0, padx=10, pady=10
 embed_color_entry = tk.Entry(root, width=50)
 embed_color_entry.grid(row=5, column=1, padx=10, pady=10)
 
+# Embed URL input
+tk.Label(root, text="Embed Title URL (optional):").grid(row=6, column=0, padx=10, pady=10)
+embed_url_entry = tk.Entry(root, width=50)
+embed_url_entry.grid(row=6, column=1, padx=10, pady=10)
+
+# Embed footer input
+tk.Label(root, text="Embed Footer (optional):").grid(row=7, column=0, padx=10, pady=10)
+embed_footer_entry = tk.Entry(root, width=50)
+embed_footer_entry.grid(row=7, column=1, padx=10, pady=10)
+
 # Send embed button
 send_embed_button = tk.Button(root, text="Send Embed", command=send_embed)
-send_embed_button.grid(row=6, column=0, columnspan=2, pady=10)
+send_embed_button.grid(row=8, column=0, columnspan=2, pady=10)
 
 # Run the application
 root.mainloop()

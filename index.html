@@ -42,6 +42,12 @@
     <label for="embedColor">Embed Color (hex):</label>
     <input type="text" id="embedColor" placeholder="Enter embed color (hex)">
     
+    <label for="embedUrl">Embed Title URL (optional):</label>
+    <input type="text" id="embedUrl" placeholder="Enter URL for embed title">
+    
+    <label for="embedFooter">Embed Footer (optional):</label>
+    <input type="text" id="embedFooter" placeholder="Enter embed footer">
+    
     <button onclick="sendEmbed()">Send Embed</button>
     
     <script>
@@ -82,6 +88,8 @@
             const embedTitle = document.getElementById('embedTitle').value;
             const embedDescription = document.getElementById('embedDescription').value;
             const embedColor = document.getElementById('embedColor').value;
+            const embedUrl = document.getElementById('embedUrl').value;
+            const embedFooter = document.getElementById('embedFooter').value;
             
             if (!webhookUrl || !embedTitle || !embedDescription || !embedColor) {
                 alert('All embed fields must be filled');
@@ -96,12 +104,22 @@
                 return;
             }
             
+            const embed = {
+                title: embedTitle,
+                description: embedDescription,
+                color: color
+            };
+            
+            if (embedUrl) {
+                embed.url = embedUrl;
+            }
+            
+            if (embedFooter) {
+                embed.footer = { text: embedFooter };
+            }
+            
             const data = {
-                embeds: [{
-                    title: embedTitle,
-                    description: embedDescription,
-                    color: color
-                }]
+                embeds: [embed]
             };
             
             try {
