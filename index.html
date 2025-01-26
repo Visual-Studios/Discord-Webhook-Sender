@@ -5,141 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discord Webhook Sender</title>
     <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        label, textarea, input, button {
-            display: block;
-            margin-bottom: 10px;
-        }
-        textarea {
-            width: 100%;
-            height: 100px;
-        }
-    </style>
 </head>
 <body>
-    <h1>Discord Webhook Sender</h1>
-    
-    <label for="webhookUrl">Webhook URL:</label>
-    <input type="text" id="webhookUrl" placeholder="Enter your webhook URL">
-    
-    <label for="message">Message:</label>
-    <textarea id="message" placeholder="Enter your message"></textarea>
-    
-    <button onclick="sendMessage()">Send Message</button>
-    
-    <h2>Send Embed</h2>
-    
-    <label for="embedTitle">Embed Title:</label>
-    <input type="text" id="embedTitle" placeholder="Enter embed title">
-    
-    <label for="embedDescription">Embed Description:</label>
-    <textarea id="embedDescription" placeholder="Enter embed description"></textarea>
-    
-    <label for="embedColor">Embed Color (hex):</label>
-    <input type="text" id="embedColor" placeholder="Enter embed color (hex)">
-    
-    <label for="embedUrl">Embed Title URL (optional):</label>
-    <input type="text" id="embedUrl" placeholder="Enter URL for embed title">
-    
-    <label for="embedFooter">Embed Footer (optional):</label>
-    <input type="text" id="embedFooter" placeholder="Enter embed footer">
-    
-    <button onclick="sendEmbed()">Send Embed</button>
-    
-    <script>
-        async function sendMessage() {
-            const webhookUrl = document.getElementById('webhookUrl').value;
-            const message = document.getElementById('message').value;
-            
-            if (!webhookUrl || !message) {
-                alert('Webhook URL and message cannot be empty');
-                return;
-            }
-            
-            const data = {
-                content: message
-            };
-            
-            try {
-                const response = await fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-                
-                if (response.status === 204) {
-                    alert('Message sent successfully');
-                } else {
-                    alert(`Failed to send message. Status code: ${response.status}`);
-                }
-            } catch (error) {
-                alert(`Error: ${error.message}`);
-            }
-        }
+    <div class="container">
+        <h1>Discord Webhook Sender</h1>
+        
+        <!-- Webhook URL input -->
+        <label for="webhookUrl">Webhook URL:</label>
+        <input type="text" id="webhookUrl" placeholder="Enter your webhook URL">
+        
+        <!-- Message input -->
+        <label for="message">Message:</label>
+        <textarea id="message" placeholder="Enter your message"></textarea>
+        
+        <!-- Send message button -->
+        <button onclick="sendMessage()">Send Message</button>
+        
+        <h2>Send Embed</h2>
+        
+        <!-- Embed title input -->
+        <label for="embedTitle">Embed Title:</label>
+        <input type="text" id="embedTitle" placeholder="Enter embed title">
+        
+        <!-- Embed description input -->
+        <label for="embedDescription">Embed Description:</label>
+        <textarea id="embedDescription" placeholder="Enter embed description"></textarea>
+        
+        <!-- Embed color input -->
+        <label for="embedColor">Embed Color (hex):</label>
+        <input type="text" id="embedColor" placeholder="Enter embed color (hex)">
+        
+        <!-- Embed URL input -->
+        <label for="embedUrl">Embed Title URL (optional):</label>
+        <input type="text" id="embedUrl" placeholder="Enter embed title URL">
+        
+        <!-- Embed footer input -->
+        <label for="embedFooter">Embed Footer (optional):</label>
+        <input type="text" id="embedFooter" placeholder="Enter embed footer">
 
-        async function sendEmbed() {
-            const webhookUrl = document.getElementById('webhookUrl').value;
-            const embedTitle = document.getElementById('embedTitle').value;
-            const embedDescription = document.getElementById('embedDescription').value;
-            const embedColor = document.getElementById('embedColor').value;
-            const embedUrl = document.getElementById('embedUrl').value;
-            const embedFooter = document.getElementById('embedFooter').value;
-            
-            if (!webhookUrl || !embedTitle || !embedDescription || !embedColor) {
-                alert('All embed fields must be filled');
-                return;
-            }
-            
-            let color;
-            try {
-                color = parseInt(embedColor.replace('#', ''), 16);
-            } catch (error) {
-                alert('Embed color must be a valid hex code');
-                return;
-            }
-            
-            const embed = {
-                title: embedTitle,
-                description: embedDescription,
-                color: color
-            };
-            
-            if (embedUrl) {
-                embed.url = embedUrl;
-            }
-            
-            if (embedFooter) {
-                embed.footer = { text: embedFooter };
-            }
-            
-            const data = {
-                embeds: [embed]
-            };
-            
-            try {
-                const response = await fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-                
-                if (response.status === 204) {
-                    alert('Embed sent successfully');
-                } else {
-                    alert(`Failed to send embed. Status code: ${response.status}`);
-                }
-            } catch (error) {
-                alert(`Error: ${error.message}`);
-            }
-        }
-    </script>
+        <!-- Send embed button -->
+        <button onclick="sendEmbed()">Send Embed</button>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
+
+
